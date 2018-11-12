@@ -69,7 +69,7 @@ let getWeb3 = () => {
         netIdName = network.NAME
       }
 
-      document.title = `${netIdName} - POA Validators DApp`
+      document.title = `${netIdName} - ARTIS Validators DApp`
 
       if (errorMsg !== null) {
         reject({ message: errorMsg })
