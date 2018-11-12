@@ -9,7 +9,7 @@ let Socials = () => {
     },
     // {
     //   icon: 'socials-i_poa',
-    //   title: 'POA Network',
+    //   title: 'ARTIS',
     //   url: 'https://poa.network'
     // },
     {
