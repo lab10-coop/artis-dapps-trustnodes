@@ -11,15 +11,15 @@ constants.ABIsSources = {
 constants.userDeniedTransactionPattern = 'User denied transaction'
 
 constants.NETWORKS = {
-  '4281427': {
-    NAME: 'ARTIS',
-    BRANCH: 'ARTIS',
+  '246529': {
+    NAME: 'ARTIS Sigma 1',
+    BRANCH: 'sigma1',
     TESTNET: false
   },
   '246785': {
-    NAME: 'ARTIS',
-    BRANCH: 'ARTIS',
-    TESTNET: false
+    NAME: 'ARTIS Tau 1',
+    BRANCH: 'tau1',
+    TESTNET: true
   }
 }
 

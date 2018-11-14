@@ -1,19 +1,11 @@
 import { constants } from '../constants'
 
 function addressesURL(branch) {
-  const URL = `https://raw.githubusercontent.com/${constants.organization}/${constants.repoName}/${branch}/${
-    constants.addressesSourceFile
-  }`
-  console.log(URL)
-  return URL
+  return `/networks/${branch}/${constants.addressesSourceFile}`
 }
 
 function ABIURL(branch, contract) {
-  const URL = `https://raw.githubusercontent.com/${constants.organization}/${constants.repoName}/${branch}/abis/${
-    constants.ABIsSources[contract]
-  }`
-  console.log(URL)
-  return URL
+  return `/networks/${branch}/abis/` + constants.ABIsSources[contract]
 }
 
 function getABI(branch, contract) {
