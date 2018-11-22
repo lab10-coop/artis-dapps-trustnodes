@@ -6,6 +6,5 @@ staging:
   script:
     - cd /var/www/nginx/poa-dapps-validators
     - git pull
-    - ~/.nvm/nvm.sh
-    - npm ci
+    - npm ci || npm i
     - CI=false npm run build
