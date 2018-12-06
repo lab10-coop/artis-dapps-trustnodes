@@ -4,7 +4,6 @@ import App from './App'
 import Footer from './Footer'
 import Header from './Header'
 import KeysManager from './contracts/KeysManager.contract'
-import ProofOfPhysicalAddress from './contracts/ProofOfPhysicalAddress.contract'
 import Loading from './Loading'
 import Metadata from './contracts/Metadata.contract'
 import React, { Component } from 'react'
@@ -107,21 +106,9 @@ class AppMainRouter extends Component {
       netId,
       addresses
     })
-    let proofOfPhysicalAddressContract = new ProofOfPhysicalAddress()
-    try {
-      await proofOfPhysicalAddressContract.init({
-        web3,
-        netId,
-        addresses
-      })
-    } catch (e) {
-      console.error('Error initializing ProofOfPhysicalAddress', e)
-      proofOfPhysicalAddressContract = null
-    }
     this.setState({
       keysManager,
       metadataContract,
-      proofOfPhysicalAddressContract,
       loading: false,
       netId
     })

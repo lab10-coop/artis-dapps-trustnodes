@@ -66,17 +66,6 @@
     padding-top: 20px;
   }
 
-  &-notary,
-  &-license {
-    width: 48%;
-    font-size: 12px;
-
-    @media (max-width: $tablet-width) {
-      float: none;
-      width: 100%;
-    }
-  }
-
   &-title {
     background-position: 0 50%;
     background-repeat: no-repeat;
@@ -103,10 +92,10 @@
   }
 
   &-table {
-
+    
     &-i {
       color: #333;
-      display: flex;
+      display: block;
       font-size: 14px;
       font-weight: 500;
       justify-content: space-between;

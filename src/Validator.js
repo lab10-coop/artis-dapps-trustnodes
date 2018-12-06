@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ValidatorPhysicalAddresses from './ValidatorPhysicalAddresses'
 
 class Validator extends Component {
   constructor(props) {
@@ -11,29 +10,14 @@ class Validator extends Component {
       this.setState({ confirmation: confirmation[0] })
     })
   }
-
   render() {
-    let {
-      physicalAddresses,
-      address,
-      firstName,
-      lastName,
-      licenseId,
-      expirationDate,
-      createdDate,
-      updatedDate,
-      index,
-      children
-    } = this.props
-
+    let { physicalAddress, address, firstName, lastName, createdDate, updatedDate, index, children } = this.props
     const showAllValidators = this.props.methodToCall === 'getAllValidatorsData'
-
     const confirmations = showAllValidators ? (
       ''
     ) : (
       <div className="validators-header--confirmations">{this.state.confirmation} confirmations</div>
     )
-
     const indexAndAddress = showAllValidators ? `#${index}. ${address}` : address
     const pendingChangeDate = !updatedDate ? (
       ''
@@ -49,36 +33,34 @@ class Validator extends Component {
         <div className="validators-header">
           <div>
             <div className="validators-header--address">{indexAndAddress}</div>
-            <div className="validators-header--hint">Wallet Address</div>
+            <div className="validators-header--hint">Mining Key</div>
           </div>
           {confirmations}
         </div>
         <div className="validators-body">
-          <div className="validators-notary left">
-            <p className="validators-title validators-title--notary">Notary</p>
+          <div className="validators-notary">
+            <p className="validators-title validators-title--notary">Validator</p>
             <div className="validators-table">
               <div className="validators-table-i">
-                <p>Full Name</p>
-                <p>
+                <p className="validators-header--hint">Full Name</p>
+                <div>
                   {firstName} {lastName}
-                </p>
-              </div>
-              <ValidatorPhysicalAddresses physicalAddresses={physicalAddresses} />
-            </div>
-          </div>
-          <div className="validators-license right">
-            <p className="validators-title  validators-title--notary-license">Notary license</p>
-            <div className="validators-table">
-              <div className="validators-table-i">
-                <p>License ID</p>
-                <p>{licenseId}</p>
+                </div>
               </div>
               <div className="validators-table-i">
-                <p>License Expiration</p>
-                <p>{expirationDate}</p>
+                <p className="validators-header--hint">Adress</p>
+                <p>{physicalAddress.fullAddress}</p>
               </div>
               <div className="validators-table-i">
-                <p>Miner Creation Date</p>
+                <p className="validators-header--hint">Update Date</p>
+                <p>{physicalAddress.updatedDate}</p>
+              </div>
+              <div className="validators-table-i">
+                <p className="validators-header--hint">Create Date</p>
+                <p>{physicalAddress.createdDate}</p>
+              </div>
+              <div className="validators-table-i">
+                <p className="validators-header--hint">Miner Creation Date</p>
                 <p>{createdDate}</p>
               </div>
               {pendingChangeDate}

@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import './stylesheets/application.css'
-import PlacesAutocomplete, { geocodeByAddress } from 'react-places-autocomplete'
-import moment from 'moment'
 import Loading from './Loading'
 import { messages } from './messages'
 import helpers from './helpers'
@@ -16,22 +14,14 @@ class App extends Component {
     this.getKeysManager = this.getKeysManager.bind(this)
     this.getMetadataContract = this.getMetadataContract.bind(this)
     this.getVotingKey = this.getVotingKey.bind(this)
-    this.onChangeAutoComplete = address => {
-      const form = this.state.form
-      form.fullAddress = address
-      this.setState({ form })
-    }
-    this.onSelect = this.onSelectAutocomplete.bind(this)
     this.state = {
       web3Config: {},
       form: {
         fullAddress: '',
-        expirationDate: '',
         postal_code: '',
         us_state: '',
         firstName: '',
-        lastName: '',
-        licenseId: ''
+        lastName: ''
       },
       hasData: false
     }
@@ -52,9 +42,7 @@ class App extends Component {
         First Name: <b>${pendingChange.firstName}</b> <br/>
         Last Name: <b>${pendingChange.lastName}</b> <br/>
         Full Address: <b>${pendingChange.fullAddress}</b> <br/>
-        Expiration Date: <b>${pendingChange.expirationDate}</b> <br />
-        License ID: <b>${pendingChange.licenseId}</b> <br/>
-        US state: <b>${pendingChange.us_state}</b> <br/>
+        State: <b>${pendingChange.us_state}</b> <br/>
         Zip Code: <b>${pendingChange.postal_code}</b> <br/>
       `
       helpers.generateAlert('warning', 'You have pending changes!', msg)
@@ -62,12 +50,10 @@ class App extends Component {
     this.setState({
       form: {
         fullAddress: currentData.fullAddress,
-        expirationDate: currentData.expirationDate,
         postal_code: currentData.postal_code,
         us_state: currentData.us_state,
         firstName: currentData.firstName,
-        lastName: currentData.lastName,
-        licenseId: currentData.licenseId
+        lastName: currentData.lastName
       },
       hasData
     })
@@ -91,7 +77,6 @@ class App extends Component {
     return this.props.web3Config.miningKey
   }
   checkValidation() {
-    const isAfter = moment(this.state.form.expirationDate).isAfter(moment())
     let keys = Object.keys(this.state.form)
     keys.forEach(key => {
       if (!this.state.form[key]) {
@@ -100,48 +85,7 @@ class App extends Component {
         return false
       }
     })
-    if (isAfter) {
-    } else {
-      this.setState({ loading: false })
-      helpers.generateAlert('warning', 'Warning!', 'Expiration date should be valid')
-      return false
-    }
     return true
-  }
-  async onSelectAutocomplete(data) {
-    let place = await geocodeByAddress(data)
-    let address_components = {}
-    for (var i = 0; i < place[0].address_components.length; i++) {
-      var addressType = place[0].address_components[i].types[0]
-      switch (addressType) {
-        case 'postal_code':
-          address_components.postal_code = place[0].address_components[i].short_name
-          break
-        case 'street_number':
-          address_components.street_number = place[0].address_components[i].short_name
-          break
-        case 'route':
-          address_components.route = place[0].address_components[i].short_name
-          break
-        case 'locality':
-          address_components.locality = place[0].address_components[i].short_name
-          break
-        case 'administrative_area_level_1':
-          address_components.administrative_area_level_1 = place[0].address_components[i].short_name
-          break
-        default:
-          break
-      }
-      let form = this.state.form
-      form.fullAddress = `${address_components.street_number} ${address_components.route} ${
-        address_components.locality
-      }`
-      form.us_state = address_components.administrative_area_level_1
-      form.postal_code = address_components.postal_code
-      this.setState({
-        form
-      })
-    }
   }
   async onClick() {
     this.setState({ loading: true })
@@ -166,11 +110,9 @@ class App extends Component {
       .createMetadata({
         firstName: this.state.form.firstName,
         lastName: this.state.form.lastName,
-        licenseId: this.state.form.licenseId,
         fullAddress: this.state.form.fullAddress,
         state: this.state.form.us_state,
         zipcode: this.state.form.postal_code,
-        expirationDate: moment(this.state.form.expirationDate).unix(),
         votingKey: this.getVotingKey(),
         hasData: this.state.hasData
       })
@@ -209,17 +151,6 @@ class App extends Component {
       return null
     }
     const BtnAction = this.state.hasData ? 'Update' : 'Set'
-    const AutocompleteItem = ({ formattedSuggestion }) => (
-      <div className="custom-container">
-        <strong>{formattedSuggestion.mainText}</strong> <small>{formattedSuggestion.secondaryText}</small>
-      </div>
-    )
-
-    const inputProps = {
-      value: this.state.form.fullAddress,
-      onChange: this.onChangeAutoComplete,
-      id: 'address'
-    }
     let loader = this.state.loading ? <Loading /> : ''
     let createKeyBtn = (
       <div className="create-keys">
@@ -233,21 +164,8 @@ class App extends Component {
             <input type="text" id="lastName" value={this.state.form.lastName} onChange={this.onChangeFormField} />
           </div>
           <div className="create-keys-form-i">
-            <label htmlFor="licenseId">License id</label>
-            <input type="text" id="licenseId" value={this.state.form.licenseId} onChange={this.onChangeFormField} />
-          </div>
-          <div className="create-keys-form-i">
-            <label htmlFor="expirationDate">License expiration</label>
-            <input
-              type="date"
-              id="expirationDate"
-              value={this.state.form.expirationDate}
-              onChange={this.onChangeFormField}
-            />
-          </div>
-          <div className="create-keys-form-i">
             <label htmlFor="address">Address</label>
-            <PlacesAutocomplete onSelect={this.onSelect} inputProps={inputProps} autocompleteItem={AutocompleteItem} />
+            <input type="text" id="address" value={this.state.form.fullAddress} onChange={this.onChangeFormField} />
           </div>
           <div className="create-keys-form-i">
             <label htmlFor="state">State</label>
