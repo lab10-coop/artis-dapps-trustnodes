@@ -4,6 +4,7 @@ import helpers from './helpers'
 import helpersGlobal from '../helpers'
 import { messages } from '../messages'
 import { constants } from '../constants'
+import Web3 from 'web3'
 
 var toAscii = function(hex) {
   var str = '',
@@ -39,16 +40,16 @@ export default class Metadata {
     this.mocRemoved = await poaInstance.isMasterOfCeremonyRemoved()
     this.miningKeys = await poaInstance.getValidators()
   }
-  async createMetadata({ firstName, lastName, fullAddress, state, zipcode, votingKey, hasData }) {
+  async createMetadata({ firstName, fullAddress, licenseId, state, zipcode, votingKey, hasData }) {
     let methodToCall = hasData ? 'changeRequest' : 'createMetadata'
     return await this.metadataInstance.methods[methodToCall](
       this.web3.utils.fromAscii(firstName),
-      this.web3.utils.fromAscii(lastName),
       this.web3.utils.fromAscii(''),
+      this.web3.utils.fromAscii(licenseId),
       fullAddress,
       this.web3.utils.fromAscii(state),
       this.web3.utils.fromAscii(zipcode),
-      null
+      0
     ).send({ from: votingKey, gasPrice: this.gasPrice })
   }
 
@@ -76,11 +77,12 @@ export default class Metadata {
     return {
       firstName: toAscii(validatorData.firstName),
       lastName: toAscii(validatorData.lastName),
-      fullAddress: validatorData.fullAddress,
+      fullAddress: validatorData.fullAddress == null ? '' : validatorData.fullAddress,
+      licenseId: toAscii(validatorData.licenseId),
       createdDate,
       updatedDate,
-      us_state: toAscii(validatorData.state),
-      postal_code: toAscii(validatorData.zipcode)
+      state: toAscii(validatorData.state),
+      zipcode: toAscii(validatorData.zipcode)
     }
   }
 

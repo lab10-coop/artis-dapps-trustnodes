@@ -21,7 +21,8 @@ class App extends Component {
         postal_code: '',
         us_state: '',
         firstName: '',
-        lastName: ''
+        lastName: '',
+        licenseId: ''
       },
       hasData: false
     }
@@ -39,21 +40,21 @@ class App extends Component {
     const pendingChange = await this.getMetadataContract().getPendingChange(this.getMiningKey())
     if (Number(pendingChange.minThreshold) > 0) {
       var msg = `
-        First Name: <b>${pendingChange.firstName}</b> <br/>
-        Last Name: <b>${pendingChange.lastName}</b> <br/>
-        Full Address: <b>${pendingChange.fullAddress}</b> <br/>
-        State: <b>${pendingChange.us_state}</b> <br/>
-        Zip Code: <b>${pendingChange.postal_code}</b> <br/>
+        Name: <b>${pendingChange.fullAddress}</b> <br/>
+        Organization ID: <b>${pendingChange.licenseId}</b> <br/>
+        Country: <b>${pendingChange.us_state}</b> <br/>
+        Hosting Provider Name: <b>${pendingChange.firstName}</b> <br/>
+        Data Center Location: <b>${pendingChange.postal_code}</b> <br/>
       `
       helpers.generateAlert('warning', 'You have pending changes!', msg)
     }
     this.setState({
       form: {
         fullAddress: currentData.fullAddress,
-        postal_code: currentData.postal_code,
-        us_state: currentData.us_state,
+        licenseId: currentData.licenseId,
+        state: currentData.state,
         firstName: currentData.firstName,
-        lastName: currentData.lastName
+        zipcode: currentData.zipcode
       },
       hasData
     })
@@ -109,10 +110,10 @@ class App extends Component {
     this.getMetadataContract()
       .createMetadata({
         firstName: this.state.form.firstName,
-        lastName: this.state.form.lastName,
         fullAddress: this.state.form.fullAddress,
-        state: this.state.form.us_state,
-        zipcode: this.state.form.postal_code,
+        licenseId: this.state.form.licenseId,
+        state: this.state.form.state,
+        zipcode: this.state.form.zipcode,
         votingKey: this.getVotingKey(),
         hasData: this.state.hasData
       })
@@ -139,8 +140,8 @@ class App extends Component {
     const field = event.target.id
     const value = event.target.value
     let form = this.state.form
-
     form[field] = value
+
     this.setState({ form })
   }
   render() {
@@ -156,24 +157,24 @@ class App extends Component {
       <div className="create-keys">
         <form className="create-keys-form">
           <div className="create-keys-form-i">
-            <label htmlFor="first-name">First name</label>
+            <label htmlFor="fullAddress">Name</label>
+            <input type="text" id="fullAddress" value={this.state.form.fullAddress} onChange={this.onChangeFormField} />
+          </div>
+          <div className="create-keys-form-i">
+            <label htmlFor="licenseId">Organization ID (company record)</label>
+            <input type="text" id="licenseId" value={this.state.form.licenseId} onChange={this.onChangeFormField} />
+          </div>
+          <div className="create-keys-form-i">
+            <label htmlFor="state">Country of tax residency</label>
+            <input type="text" id="state" value={this.state.form.state} onChange={this.onChangeFormField} />
+          </div>
+          <div className="create-keys-form-i">
+            <label htmlFor="firstName">Hosting Provider Name</label>
             <input type="text" id="firstName" value={this.state.form.firstName} onChange={this.onChangeFormField} />
           </div>
           <div className="create-keys-form-i">
-            <label htmlFor="last-name">Last name</label>
-            <input type="text" id="lastName" value={this.state.form.lastName} onChange={this.onChangeFormField} />
-          </div>
-          <div className="create-keys-form-i">
-            <label htmlFor="address">Address</label>
-            <input type="text" id="address" value={this.state.form.fullAddress} onChange={this.onChangeFormField} />
-          </div>
-          <div className="create-keys-form-i">
-            <label htmlFor="state">State</label>
-            <input type="text" id="us_state" value={this.state.form.us_state} onChange={this.onChangeFormField} />
-          </div>
-          <div className="create-keys-form-i">
-            <label htmlFor="zip">Zip code</label>
-            <input type="text" id="postal_code" value={this.state.form.postal_code} onChange={this.onChangeFormField} />
+            <label htmlFor="zipcode">Data Center Location</label>
+            <input type="text" id="zipcode" value={this.state.form.zipcode} onChange={this.onChangeFormField} />
           </div>
         </form>
         <button onClick={this.onClick} className="create-keys-button">

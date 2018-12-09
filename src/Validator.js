@@ -11,7 +11,7 @@ class Validator extends Component {
     })
   }
   render() {
-    let { physicalAddress, address, firstName, lastName, createdDate, updatedDate, index, children } = this.props
+    let { address, firstName, licenseId, fullAddress, state, zipcode, updatedDate, index, children } = this.props
     const showAllValidators = this.props.methodToCall === 'getAllValidatorsData'
     const confirmations = showAllValidators ? (
       ''
@@ -42,26 +42,24 @@ class Validator extends Component {
             <p className="validators-title validators-title--notary">Validator</p>
             <div className="validators-table">
               <div className="validators-table-i">
-                <p className="validators-header--hint">Full Name</p>
-                <div>
-                  {firstName} {lastName}
-                </div>
+                <p className="validators-header--hint">Name</p>
+                <div>{fullAddress}</div>
               </div>
               <div className="validators-table-i">
-                <p className="validators-header--hint">Adress</p>
-                <p>{physicalAddress.fullAddress}</p>
+                <p className="validators-header--hint">Organization ID</p>
+                <p>{licenseId}</p>
               </div>
               <div className="validators-table-i">
-                <p className="validators-header--hint">Update Date</p>
-                <p>{physicalAddress.updatedDate}</p>
+                <p className="validators-header--hint">Country (Tax Residency)</p>
+                <p>{state}</p>
               </div>
               <div className="validators-table-i">
-                <p className="validators-header--hint">Create Date</p>
-                <p>{physicalAddress.createdDate}</p>
+                <p className="validators-header--hint">Hosting Provider Name</p>
+                <p>{firstName}</p>
               </div>
               <div className="validators-table-i">
-                <p className="validators-header--hint">Miner Creation Date</p>
-                <p>{createdDate}</p>
+                <p className="validators-header--hint">Data Center Location (City, Country)</p>
+                <p>{zipcode}</p>
               </div>
               {pendingChangeDate}
             </div>
