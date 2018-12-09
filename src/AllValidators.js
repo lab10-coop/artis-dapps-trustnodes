@@ -84,9 +84,10 @@ export default class AllValidators extends Component {
           address={validator.address}
           firstName={validator.firstName}
           lastName={validator.lastName}
+          licenseId={validator.licenseId}
           fullAddress={validator.fullAddress}
-          us_state={validator.us_state}
-          postal_code={validator.postal_code}
+          state={validator.state}
+          zipcode={validator.zipcode}
           createdDate={validator.createdDate}
           updatedDate={validator.updatedDate}
           index={validator.index}

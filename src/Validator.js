@@ -39,7 +39,7 @@ class Validator extends Component {
         </div>
         <div className="validators-body">
           <div className="validators-notary">
-            <p className="validators-title validators-title--notary">Validator</p>
+            <p className="validators-title validators-title--notary">Trustnode Operator</p>
             <div className="validators-table">
               <div className="validators-table-i">
                 <p className="validators-header--hint">Name</p>

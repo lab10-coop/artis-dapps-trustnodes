@@ -165,7 +165,7 @@ class App extends Component {
             <input type="text" id="licenseId" value={this.state.form.licenseId} onChange={this.onChangeFormField} />
           </div>
           <div className="create-keys-form-i">
-            <label htmlFor="state">Country of tax residency</label>
+            <label htmlFor="state">Country of Tax Residency</label>
             <input type="text" id="state" value={this.state.form.state} onChange={this.onChangeFormField} />
           </div>
           <div className="create-keys-form-i">
