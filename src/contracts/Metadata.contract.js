@@ -4,7 +4,6 @@ import helpers from './helpers'
 import helpersGlobal from '../helpers'
 import { messages } from '../messages'
 import { constants } from '../constants'
-import Web3 from 'web3'
 
 var toAscii = function(hex) {
   var str = '',
