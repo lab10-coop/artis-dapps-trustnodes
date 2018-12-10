@@ -78,14 +78,11 @@ class App extends Component {
     return this.props.web3Config.miningKey
   }
   checkValidation() {
-    let keys = Object.keys(this.state.form)
-    keys.forEach(key => {
-      if (!this.state.form[key]) {
-        this.setState({ loading: false })
-        helpers.generateAlert('warning', 'Warning!', `${key} cannot be empty`)
-        return false
-      }
-    })
+    if (!this.state.form['fullAddress']) {
+      this.setState({ loading: false })
+      helpers.generateAlert('warning', 'Warning!', `Name cannot be empty`)
+      return false
+    }
     return true
   }
   async onClick() {
@@ -145,9 +142,6 @@ class App extends Component {
     this.setState({ form })
   }
   render() {
-    const { netId } = this.props.web3Config
-    const classNameHiddenIfNotCoreNetwork = netId !== helpers.netIdByName('core') ? 'display-none' : ''
-
     if (!this.isValidVotingKey) {
       return null
     }
@@ -165,7 +159,7 @@ class App extends Component {
             <input type="text" id="licenseId" value={this.state.form.licenseId} onChange={this.onChangeFormField} />
           </div>
           <div className="create-keys-form-i">
-            <label htmlFor="state">Country of Tax Residency</label>
+            <label htmlFor="state">Country (Tax Residency)</label>
             <input type="text" id="state" value={this.state.form.state} onChange={this.onChangeFormField} />
           </div>
           <div className="create-keys-form-i">
@@ -173,22 +167,13 @@ class App extends Component {
             <input type="text" id="firstName" value={this.state.form.firstName} onChange={this.onChangeFormField} />
           </div>
           <div className="create-keys-form-i">
-            <label htmlFor="zipcode">Data Center Location</label>
+            <label htmlFor="zipcode">Data Center Location (City, Country)</label>
             <input type="text" id="zipcode" value={this.state.form.zipcode} onChange={this.onChangeFormField} />
           </div>
         </form>
         <button onClick={this.onClick} className="create-keys-button">
           {BtnAction} Metadata
         </button>
-        <p className={`create-keys-address-note ${classNameHiddenIfNotCoreNetwork}`}>
-          <i className="create-keys-address-note__icon-info" />
-          The entered address will be displayed as Unconfirmed and will be used if you don't have Registered Address(es)
-          in{' '}
-          <a href="https://popa.poa.network/" target="_blank" rel="noopener noreferrer">
-            PoPA DApp
-          </a>
-          . You have to use PoPA to register and confirm your address(es).
-        </p>
       </div>
     )
 

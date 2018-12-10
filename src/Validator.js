@@ -23,7 +23,7 @@ class Validator extends Component {
       ''
     ) : (
       <div className="validators-table-i">
-        <p>Pending Change Date</p>
+        <p className="validators-header--hint">Pending Change Date</p>
         <p>{updatedDate}</p>
       </div>
     )
@@ -46,7 +46,7 @@ class Validator extends Component {
                 <div>{fullAddress}</div>
               </div>
               <div className="validators-table-i">
-                <p className="validators-header--hint">Organization ID</p>
+                <p className="validators-header--hint">Organization ID (Company Record)</p>
                 <p>{licenseId}</p>
               </div>
               <div className="validators-table-i">
