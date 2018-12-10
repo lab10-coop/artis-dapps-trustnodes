@@ -17,7 +17,7 @@ class App extends Component {
     this.state = {
       web3Config: {},
       form: {
-        fullAddress: 'Nellie Bly',
+        fullAddress: '',
         postal_code: '',
         us_state: '',
         firstName: '',

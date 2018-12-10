@@ -56,7 +56,7 @@ export default class Metadata {
     return {
       firstName: '',
       lastName: '',
-      fullAddress: '',
+      fullAddress: 'Nellie Bly',
       createdDate: '',
       updatedDate: '',
       us_state: '',
