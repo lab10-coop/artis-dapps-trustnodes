@@ -35,7 +35,7 @@ class App extends Component {
   }
   async setMetadata() {
     const currentData = await this.getMetadataContract().getValidatorData(this.getMiningKey())
-    const hasData = currentData.postal_code ? true : false
+    const hasData = currentData.fullAddress ? true : false
     this.defaultValues = currentData
     const pendingChange = await this.getMetadataContract().getPendingChange(this.getMiningKey())
     if (Number(pendingChange.minThreshold) > 0) {
