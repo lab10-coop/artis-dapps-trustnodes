@@ -42,9 +42,9 @@ class App extends Component {
       var msg = `
         Name: <b>${pendingChange.fullAddress}</b> <br/>
         Organization ID: <b>${pendingChange.licenseId}</b> <br/>
-        Country: <b>${pendingChange.us_state}</b> <br/>
+        Country: <b>${pendingChange.state}</b> <br/>
         Hosting Provider Name: <b>${pendingChange.firstName}</b> <br/>
-        Data Center Location: <b>${pendingChange.postal_code}</b> <br/>
+        Data Center Location: <b>${pendingChange.zipcode}</b> <br/>
       `
       helpers.generateAlert('warning', 'You have pending changes!', msg)
     }
