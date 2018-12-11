@@ -120,10 +120,11 @@ export default class Metadata {
       firstName: toAscii(pendingChanges.firstName),
       lastName: toAscii(pendingChanges.lastName),
       fullAddress: pendingChanges.fullAddress,
+      licenseId: toAscii(pendingChanges.licenseId),
       createdDate,
       updatedDate,
-      us_state: toAscii(pendingChanges.state),
-      postal_code: toAscii(pendingChanges.zipcode),
+      state: toAscii(pendingChanges.state),
+      zipcode: toAscii(pendingChanges.zipcode),
       minThreshold: pendingChanges.minThreshold
     }
   }
@@ -133,7 +134,7 @@ export default class Metadata {
     for (let key of this.miningKeys) {
       let pendingChange = await this.getPendingChange(key)
       pendingChange.address = key
-      if (pendingChange.postal_code) {
+      if (pendingChange.fullAddress) {
         pendingChanges.push(pendingChange)
       }
     }
