@@ -274,4 +274,7 @@ class AppMainRouter extends Component {
 }
 
 ReactDOM.render(<AppMainRouter />, document.getElementById('root'))
-registerServiceWorker()
+
+// service worker disabled because we don't yet understand how exactly it affects caching policy
+// and want to avoid further issues caused by old versions of files served from cache
+//registerServiceWorker()
