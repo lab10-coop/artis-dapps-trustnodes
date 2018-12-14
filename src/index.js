@@ -12,7 +12,6 @@ import createBrowserHistory from 'history/createBrowserHistory'
 import getWeb3, { setWeb3 } from './getWeb3'
 import helpers from './helpers'
 import networkAddresses from './contracts/addresses'
-import registerServiceWorker from './registerServiceWorker'
 import { Router, Route } from 'react-router-dom'
 import { messages } from './messages'
 import { constants } from './constants'
@@ -274,7 +273,3 @@ class AppMainRouter extends Component {
 }
 
 ReactDOM.render(<AppMainRouter />, document.getElementById('root'))
-
-// service worker disabled because we don't yet understand how exactly it affects caching policy
-// and want to avoid further issues caused by old versions of files served from cache
-//registerServiceWorker()
