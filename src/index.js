@@ -132,6 +132,7 @@ class AppMainRouter extends Component {
   }
   onSetRender() {
     if (!this.state.votingKey) {
+      helpers.generateAlert('warning', 'Warning!', messages.NO_METAMASK_MSG)
       return '' // prevent rendering if the keys are not loaded yet
     }
     return <App web3Config={this.state} viewTitle={navigationData[1]['title']} />
@@ -218,6 +219,7 @@ class AppMainRouter extends Component {
     this.setState({ searchTerm: term.target.value.toLowerCase() })
   }
   async onNetworkChange(e) {
+    console.log('changing network to ' + e.value)
     this.setState({ loading: true })
 
     const netId = e.value

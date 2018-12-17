@@ -21,7 +21,7 @@ const Header = ({ netId, onChange, injectedWeb3, showMobileMenu, onMenuToggle, b
   let options = []
 
   for (const _netId in constants.NETWORKS) {
-    options.push({ value: _netId, label: `Network: ${constants.NETWORKS[_netId].NAME}` })
+    options.push({ value: _netId, label: `${constants.NETWORKS[_netId].NAME}` })
   }
 
   if (!injectedWeb3) {
