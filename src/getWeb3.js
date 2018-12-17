@@ -1,12 +1,12 @@
 import Web3 from 'web3'
-import { netIdByName } from './helpers'
+import { messages } from './messages'
 import { constants } from './constants'
 
 let getWeb3 = () => {
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     // Wait for loading completion to avoid race conditions with web3 injection timing.
-    window.addEventListener('load', async function() {
-      let web3 = null
+    window.addEventListener('load', async () => {
+      let web3
 
       // Checking if Web3 has been injected by the browser (Mist/MetaMask)
       if (window.ethereum) {
@@ -15,83 +15,57 @@ let getWeb3 = () => {
         try {
           await window.ethereum.enable()
         } catch (e) {
-          reject({ message: 'You have denied access to your accounts' })
+          console.error('User denied account access')
+          reject({ message: messages.USER_DENIED_ACCOUNT_ACCESS })
           return
         }
-      } else if (window.web3) {
+      } else if (typeof window.web3 !== 'undefined') {
         web3 = new Web3(window.web3.currentProvider)
         console.log('Injected web3 detected.')
-      }
-
-      let errorMsg = null
-      let netIdName
-      let netId
-      let injectedWeb3 = web3 !== null
-      let defaultAccount = null
-
-      if (web3) {
-        netId = await web3.eth.net.getId()
-        console.log('netId', netId)
-
-        if (!(netId in constants.NETWORKS)) {
-          netIdName = 'ERROR'
-          errorMsg = `You aren't connected to ARTIS.
-              Please, switch to ARTIS and refresh the page.
-              Check ARTIS <a href='https://github.com/poanetwork/wiki' target='blank'>Wiki</a> for more info.`
-          console.log('This is an unknown network.')
-        } else {
-          netIdName = constants.NETWORKS[netId].NAME
-          console.log(`This is ${netIdName}`)
-        }
-
-        const accounts = await web3.eth.getAccounts()
-
-        defaultAccount = accounts[0] || null
       } else {
-        // Fallback to localhost if no web3 injection.
-
-        console.log('No web3 instance injected, using Local web3.')
         console.error('Metamask not found')
-
-        if (window.location.host.indexOf('sokol') !== -1) {
-          netId = netIdByName('sokol')
-        } else if (window.location.host.indexOf('dai-test') !== -1) {
-          netId = netIdByName('dai-test')
-        } else if (window.location.host.indexOf('dai') !== -1) {
-          netId = netIdByName('dai')
-        } else {
-          netId = netIdByName('core')
-        }
-
-        const network = constants.NETWORKS[netId]
-
-        web3 = new Web3(new Web3.providers.HttpProvider(network.RPC))
-        netIdName = network.NAME
+        reject({ message: messages.NO_METAMASK_MSG })
+        return
       }
 
-      document.title = `${netIdName} - ARTIS Validators DApp`
+      const netId = await web3.eth.net.getId()
+      console.log('netId', netId)
+
+      let netIdName
+      let errorMsg = null
+
+      if (netId in constants.NETWORKS) {
+        netIdName = constants.NETWORKS[netId].NAME
+        console.log(`This is ${netIdName}`)
+      } else {
+        netIdName = 'ERROR'
+        errorMsg = messages.WRONG_NETWORK_MSG
+        console.log('This is an unknown network.')
+      }
+
+      document.title = `${netIdName} - ARTIS Validators dApp`
 
       if (errorMsg !== null) {
         reject({ message: errorMsg })
         return
       }
 
+      const accounts = await web3.eth.getAccounts()
+
+      var defaultAccount = accounts[0] || null
+      if (defaultAccount === null) {
+        reject({ message: messages.NO_METAMASK_MSG })
+        return
+      }
+
       resolve({
         web3Instance: web3,
-        netId,
         netIdName,
-        injectedWeb3,
+        netId,
         defaultAccount
       })
     })
   })
 }
 
-const setWeb3 = netId => {
-  const provider = new Web3.providers.HttpProvider(constants.NETWORKS[netId].RPC)
-  return new Web3(provider)
-}
-
 export default getWeb3
-
-export { setWeb3 }
