@@ -101,7 +101,7 @@ export default class AllValidators extends Component {
     const isValidatorsPage = this.props.methodToCall === 'getAllValidatorsData'
     const validatorsCountObj = (
       <div className="validators-count">
-        <span className="validators-count-label">Total number of validators: </span>
+        <span className="validators-count-label">Total number of Trustnodes: </span>
         <span className="validators-count-val">{this.state.validators.length}</span>
       </div>
     )

@@ -43,7 +43,7 @@ let getWeb3 = () => {
         console.log('This is an unknown network.')
       }
 
-      document.title = `${netIdName} - ARTIS Validators dApp`
+      document.title = `${netIdName} - ARTIS Trustnodes`
 
       if (errorMsg !== null) {
         reject({ message: errorMsg })
