@@ -17,7 +17,7 @@ import { messages } from './messages'
 import { constants } from './constants'
 
 const history = createBrowserHistory()
-const baseRootPath = '/poa-dapps-validators'
+const baseRootPath = ''
 const setMetadataPath = `${baseRootPath}/set`
 const pendingChangesPath = `${baseRootPath}/pending-changes`
 const navigationData = [
@@ -262,7 +262,6 @@ class AppMainRouter extends Component {
               this.state.showMobileMenu ? 'app-container-open-mobile-menu' : ''
             } ${this.getNetIdClass()}`}
           >
-            <Route exact path="/" render={this.onAllValidatorsRender} web3Config={this.state} />
             <Route exact path={baseRootPath} render={this.onAllValidatorsRender} web3Config={this.state} />
             <Route path={pendingChangesPath} render={this.onPendingChangesRender} />
             <Route path={setMetadataPath} render={this.onSetRender} />
