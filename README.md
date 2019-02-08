@@ -1,46 +1,19 @@
-# POA Network Validators DApp
+# ARTIS Network Validators Dapp
 
-Validators DApp is built for POA Network based blockchains. It gives an opportunity for the current validators of the network to set their personal information on-chain. Also, everyone can view current validators' personal data from this DApp.
+This Dapp allows to list the currently registered trustnodes of the connected ARTIS network with associated metadata (name, location, ...).  
+It also allows trustnode operators to initially set their metadata, to request changes to it and to confirm metadata change requests of other trustnode operators.  
 
-## Base supported networks
-
-- Core POA network (RPC endpoint: `https://core.poa.network`)
-- Sokol POA network (RPC endpoint: `https://sokol.poa.network`)
+The Dapp directly interacts with the [governance contracts](https://github.com/lab10-coop/artis-network-consensus-contracts) of the ARTIS network connected via web3 interface (no server backend involved).
 
 ## Supported browsers
 
-* Google Chrome v 59.0.3071.115+
+Chrome/Chromium v59+ or Brave v0.58+ with MetaMask   
+(in principle it should work in any modern browser with web3 API, but this is the tested and recommended configuration)
 
-## MetaMask plugin setup
+## MetaMask setup
 
-* Connect to POA Network in MetaMask plugin (See [Connect to POA Network via MetaMask](https://github.com/poanetwork/wiki/wiki/POA-Network-on-MetaMask))
-
-Validators DApp is based on [POA Network Governance contracts](https://github.com/poanetwork/poa-network-consensus-contracts)
-
-## Validator role
-
-### Set metadata
-If you are a new validator of the POA Network and your validator node is successfully launched, you should fill your personal data. To do it you need:
-- connect to the corresponding endpoint of POA Network in Metamask
-- select your voting key from accounts in Metamask
-- click **SET METADATA** in the navigation bar
-- fill all fields in the form of a new validator
-- click **+ SET METADATA** button
-- confirm transaction in Metamask.
-
-That's it. After DApp will get a receipt for the transaction you'll see a success message and your personal data will be added to the list of validators.
-
-If you need to change already submitted data you need to repeat previous instruction with the only difference your changes will be applied after two confirmations from other validators.
-
-### Confirm and finalize change in metadata
-If you are an active validator of POA Network you have an ability to confirm pending changes of personal information from other validators. To do it you need:
-- connect to the corresponding endpoint of POA Network in Metamask
-- select your voting key from accounts in Metamask
-- click **PENDING CHANGES** in the navigation bar. You'll see all pending changes
-- find pending changes card
-- click **Confirm** button
-
-If you see **Finalize** button, then 2 confirmations are already submitted and you or any other validator might click it to apply changes of validator's personal data.
+The recommended way to connect to an ARTIS network is via the [MetaMask browser plugin](http://metamask.io/).  
+In order to set up MetaMask for ARTIS, follow the [instructions for tau1](https://github.com/lab10-coop/tau1#use-with-metamask) or [instructions for sigma1](https://github.com/lab10-coop/sigma1#use-with-metamask)).
 
 ## Building from source
 
