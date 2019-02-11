@@ -4,7 +4,7 @@ stages:
 staging:
   stage: deploy
   script:
-    - cd /var/www/nginx/artis-dapps-validators
+    - cd /var/www/nginx/artis-dapps-trustnodes
     - git pull
     - npm ci || npm i
     - CI=false npm run build
