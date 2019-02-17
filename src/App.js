@@ -83,7 +83,28 @@ class App extends Component {
       helpers.generateAlert('warning', 'Warning!', `Name cannot be empty`)
       return false
     }
-    return true
+    let keys = Object.keys(this.state.form)
+    let hasError = false
+    for (var iKey = 0; iKey < keys.length; iKey++) {
+      let key = keys[iKey]
+      if (this.state.form[key]) {
+        let stringToTransmit = this.state.form[key]
+        for (var i = 0; i < stringToTransmit.length; i++) {
+          let char = stringToTransmit.charCodeAt(i)
+          if (char > 127) {
+            this.setState({ loading: false })
+            helpers.generateAlert(
+              'warning',
+              'Warning!',
+              `Special characters are not allowed. Invalid: ${this.state.form[key]}`
+            )
+            hasError = true
+            return false
+          }
+        }
+      }
+    }
+    return !hasError
   }
   async onClick() {
     this.setState({ loading: true })
