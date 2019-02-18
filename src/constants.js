@@ -18,7 +18,7 @@ constants.NETWORKS = {
   },
   '246785': {
     NAME: 'ARTIS tau1',
-    RPC: 'http://rpc.tau1.artis.network',
+    RPC: 'https://rpc.tau1.artis.network',
     BRANCH: 'tau1',
     TESTNET: true
   }
